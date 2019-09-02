@@ -21,17 +21,20 @@ public class Greeting {
     public static final String FORMAT = "Hello, %s!";
 
     private final String content;
-
-    public static Greeting createInstance(String content) throws Exception {
-        return new Greeting(content);
-    }
+    private final String version;
 
     public Greeting() {
         this.content = null;
+        this.version = null;
     }
 
-    public Greeting(String content) {
+    public Greeting(String content, String version) {
         this.content = content;
+        this.version = version;
+    }
+
+    public String getVersion() {
+        return version;
     }
 
     public String getContent() {

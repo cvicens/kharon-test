@@ -32,30 +32,37 @@ import io.micrometer.core.instrument.Metrics;
 @Component
 @ConfigurationProperties
 public class GreetingEndpoint {
-    private int errorDelay;
+    private String projectVersion;
 
     @GET
     @Produces("application/json")
-    public Greeting greeting(@QueryParam("name") @DefaultValue("World") String name,
-                             @QueryParam("error") String error){
+    public Greeting greeting(
+        @QueryParam("name") @DefaultValue("World") String name,
+        @QueryParam("error") String error) {
+        // String format
         final String message = String.format(Greeting.FORMAT, name);
+
         // Prometheus metric
-        Metrics.counter("api.http.requests.total", "api", "greeting", "method", "GET", "endpoint",  "/greeting").increment();
+        Metrics.counter("api.http.requests.total", "api", "greeting", "method", "GET", "endpoint", "/greeting")
+                .increment();
 
         if (error != null) {
             // Prometheus metric
-            Metrics.counter("api.http.errors.total", "api", "greeting", "method", "GET", "endpoint", "/greeting").increment();
+            Metrics.counter("api.http.errors.total", "api", "greeting", "method", "GET", "endpoint", "/greeting")
+                    .increment();
             throw new CustomErrorException(error);
         }
 
-        return new Greeting(message);
+        return new Greeting(message, this.projectVersion);
     }
 
-    public int getErrorDelay() {
-        return errorDelay;
+    public String getProjectVersion() {
+        return projectVersion;
     }
 
-    public void setErrorDelay(int errorDelay) {
-        this.errorDelay = errorDelay;
+    public void setProjectVersion(String projectVersion) {
+        this.projectVersion = projectVersion;
     }
+
+    
 }
