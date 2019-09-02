@@ -23,7 +23,7 @@
   </parent>
   <groupId>com.yourcompany.newapp</groupId>
   <artifactId>kharon-test</artifactId>
-  <version>1.0.0</version>
+  <version>v1.1.0</version>
   <name>Spring Boot - HTTP Booster</name>
   <description>Spring Boot - HTTP Booster</description>
   <properties>
